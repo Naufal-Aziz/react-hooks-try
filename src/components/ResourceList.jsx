@@ -1,19 +1,19 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 const ResourceList = ({resourceName}) => {
   const [theList, setTheList] = useState([]);
 
-  const getResource = async () => {
+  const getResource = useCallback(async () => {
     let res = await axios.get(
       `https://jsonplaceholder.typicode.com/${resourceName}`
     );
     setTheList(res.data);
-  };
+  }, [resourceName])
 
   useEffect(() => {
     getResource();
-  }, [resourceName]);
+  }, [getResource]);
 
   return (
     <>
